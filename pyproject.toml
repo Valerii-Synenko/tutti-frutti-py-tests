@@ -3,15 +3,15 @@ name = "tutti-frutti-py"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
-    "pyrefly>=0.60.0",
-    "pytest>=9.1.1",
-    "requests>=2.34.2",
-    "pydantic>=2.9.0",
-    "pydantic-settings>=2.6.0",
-    "python-dotenv>=1.0.1",
-    "faker>=33.0.0",
-    "allure-pytest>=2.13.5",
-    "ruff>=0.16.6",
+    "pytest==9.1.1",
+    "requests==2.34.2",
+    "pydantic==2.14.0b1",
+    "pydantic-settings==2.15.0",
+    "python-dotenv==1.2.3",
+    "faker==40.38.0",
+    "allure-pytest==2.16.0",
+    "ruff==0.16.6",
+    "ty==0.0.78",
 ]
 
 [project.optional-dependencies]
@@ -21,8 +21,33 @@ db = ["pymongo>=4.10.0", "psycopg[binary]>=3.2.0"]
 load = ["locust>=2.32.0"]
 dev = ["ruff>=0.7.0"]
 
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+extend-exclude = ["protos"]
+src = ["framework", "tests", "load", "scripts"]
+respect-gitignore = true
+show-fixes = true
+output-format = "concise"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+docstring-code-format = true
+
 [tool.ruff.lint]
 select = ["E", "F", "W", "I"]
+
+[tool.ty.environment]
+python = ".venv"
+
+[tool.ty.src]
+respect-ignore-files = true
+exclude = ["test_data", "protos"]
+
+[tool.ty.rules]
+possibly-unresolved-reference = "warn"
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
@@ -34,4 +59,3 @@ markers = [
     "db: Mongo/Postgres data tests",
     "grpc: gRPC-specific tests",
 ]
-

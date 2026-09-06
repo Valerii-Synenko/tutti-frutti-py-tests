@@ -16,4 +16,5 @@ def test_admin_login():
             "password": f"{os.getenv('ADMIN_PASSWORD')}",
         },
     )
+
     assert resp.status_code == 200
