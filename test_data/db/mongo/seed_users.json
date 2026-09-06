@@ -1,0 +1,14 @@
+[
+  {
+    "_id": "64f1a2b3c4d5e6f7a8b9c0d1",
+    "email": "test.user@example.com",
+    "role": "user",
+    "is_active": true
+  },
+  {
+    "_id": "64f1a2b3c4d5e6f7a8b9c0d2",
+    "email": "test.admin@example.com",
+    "role": "admin",
+    "is_active": true
+  }
+]

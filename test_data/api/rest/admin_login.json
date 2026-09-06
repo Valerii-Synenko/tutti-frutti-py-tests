@@ -1,0 +1,14 @@
+{
+  "valid": {
+    "username": "${ADMIN_EMAIL}",
+    "password": "${ADMIN_PASSWORD}"
+  },
+  "invalid_password": {
+    "username": "${ADMIN_EMAIL}",
+    "password": "wrong-password"
+  },
+  "missing_username": {
+    "username": "",
+    "password": "${ADMIN_PASSWORD}"
+  }
+}
