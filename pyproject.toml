@@ -37,7 +37,8 @@ line-ending = "auto"
 docstring-code-format = true
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "I"]
+select = ["E", "F", "W", "I", "PT", "B", "ARG", "SIM", "UP", "C4", "RUF", "ISC", "PERF", "S"]
+ignore = ["S101"]
 
 [tool.ty.environment]
 python = ".venv"
