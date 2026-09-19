@@ -1,6 +1,5 @@
-import os
-
 from playwright.sync_api import APIRequestContext
+from settings import settings
 
 
 class BaseClient:
@@ -8,4 +7,4 @@ class BaseClient:
         self.api_context = api_context
         self.api_path = api_path
         self.endpoint = endpoint
-        self.url = f"{os.getenv('BASE_API_URL')}/{self.api_path}/{self.endpoint}"
+        self.url = f"{settings.base_api_url}/{self.api_path}/{self.endpoint}"

@@ -1,12 +1,8 @@
-import os
-
-from dotenv import load_dotenv
 from playwright.sync_api import APIResponse
+from settings import settings
 
-load_dotenv()
 
-
-class AuthTest:
+class TestAuth:
     """
     Test for user authentication functionality.
 
@@ -16,8 +12,8 @@ class AuthTest:
     """
 
     def test_user_login(self, auth_api_client):
-        user_login = os.getenv("ADMIN_EMAIL")
-        user_password = os.getenv("ADMIN_PASSWORD")
+        user_login = settings.admin_email
+        user_password = settings.admin_password
 
         response: APIResponse = auth_api_client.user_login(user_login, user_password)
 
