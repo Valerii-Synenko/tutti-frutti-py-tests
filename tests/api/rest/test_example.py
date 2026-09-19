@@ -1,20 +1,18 @@
 import os
 
-import requests
 from dotenv import load_dotenv
-from requests import Response
+from playwright.sync_api import APIResponse
 
 load_dotenv()
 
 
-def test_admin_login():
-    resp: Response = requests.post(
-        url="http://localhost:8080/auth/login",
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
-        data={
+def test_admin_login(api_context):
+    resp: APIResponse = api_context.post(
+        "http://localhost:8080/auth/login",
+        form={
             "username": f"{os.getenv('ADMIN_EMAIL')}",
             "password": f"{os.getenv('ADMIN_PASSWORD')}",
         },
     )
 
-    assert resp.status_code == 200
+    assert resp.status == 200, f"Expected status code 200, but got {resp.status}"
