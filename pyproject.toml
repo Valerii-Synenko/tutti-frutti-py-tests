@@ -52,7 +52,7 @@ possibly-unresolved-reference = "warn"
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
-addopts = "-s"
+addopts = "-s --import-mode=importlib"
 testpaths = ["tests"]
 markers = [
     "api: REST/gRPC API tests",
