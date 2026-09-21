@@ -6,9 +6,9 @@ from framework.clients.rest.base_client import BaseClient
 
 class AuthClient(BaseClient):
     def __init__(self, api_context: APIRequestContext):
-        super().__init__(api_context=api_context, api_path="auth", endpoint="login")
+        super().__init__(api_context=api_context, api_path="user", endpoint="login")
 
-    @allure.step("POST request to the endpoint: /auth/login")
+    @allure.step("POST request to the endpoint: /user/login")
     def user_login(self, username: str, password: str) -> APIResponse:
         """
         Authenticates a user by sending his credentials to the `login` endpoint.
