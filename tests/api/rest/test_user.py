@@ -25,9 +25,9 @@ class TestUser:
     @allure.description("An admin have to have opportunity to login via common endpoint")
     def test_user_login(self, auth_api_client):
         with allure.step("Login as a user with admin's credentials."):
-            user_login = settings.admin_email
-            user_password = settings.admin_password
-            response: APIResponse = auth_api_client.user_login(user_login, user_password)
+            response: APIResponse = auth_api_client.user_login(
+                settings.admin_email, settings.admin_password
+            )
 
         with allure.step("Validate response."):
             assert response.status == 200, f"Expected status code 200, but got {response.status}"
