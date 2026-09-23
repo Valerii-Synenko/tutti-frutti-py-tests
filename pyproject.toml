@@ -12,6 +12,7 @@ dependencies = [
     "allure-python-commons==2.16.1",
     "ruff==0.16.8",
     "ty==0.0.83",
+    "psycopg==3.3.6",
 ]
 
 [project.optional-dependencies]
