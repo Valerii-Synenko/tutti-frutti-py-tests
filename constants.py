@@ -1,7 +1,7 @@
 # REST API
-SUITE_AUTH = "Authentication"
-SUB_SUITE_LOGIN = "Login"
+REST_API_SUITE_AUTH = "Authentication"
+REST_API_SUB_SUITE_LOGIN = "Login"
 
 # UI
-SUIT_LOGIN_PAGE = "Login Page"
-SUB_SUITE_LOGIN_UI = "Login"
+UI_SUIT_LOGIN_PAGE = "Login Page"
+UI_SUB_SUITE_LOGIN_UI = "Login"

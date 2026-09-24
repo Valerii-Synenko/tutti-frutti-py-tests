@@ -1,17 +1,17 @@
 import allure
 import pytest
-from constants import SUB_SUITE_LOGIN_UI, SUIT_LOGIN_PAGE
+from constants import UI_SUB_SUITE_LOGIN_UI, UI_SUIT_LOGIN_PAGE
 from framework.ui.pages.market_page import MarketPage
 from playwright.sync_api import expect
 from settings import settings
 
 
-@allure.suite(SUIT_LOGIN_PAGE)
-@allure.sub_suite(SUB_SUITE_LOGIN_UI)
+@allure.suite(UI_SUIT_LOGIN_PAGE)
+@allure.sub_suite(UI_SUB_SUITE_LOGIN_UI)
 @pytest.mark.ui
 class TestAuth:
     """
-    Tests related to the login logic.
+    Tests related to the login and registration logic.
 
     Covers cases:
     -------

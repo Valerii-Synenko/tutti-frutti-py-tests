@@ -1,14 +1,14 @@
 import allure
 import pytest
-from constants import SUB_SUITE_LOGIN, SUITE_AUTH
+from constants import REST_API_SUB_SUITE_LOGIN, REST_API_SUITE_AUTH
 from framework.models.api.rest.user.login_response_model import LoginResponseModel
 from framework.utils.assertions import assert_matches_schema
 from playwright.sync_api import APIResponse
 from settings import settings
 
 
-@allure.suite(SUITE_AUTH)
-@allure.sub_suite(SUB_SUITE_LOGIN)
+@allure.suite(REST_API_SUITE_AUTH)
+@allure.sub_suite(REST_API_SUB_SUITE_LOGIN)
 @pytest.mark.api
 class TestUser:
     """
