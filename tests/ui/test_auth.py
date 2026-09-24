@@ -3,7 +3,6 @@ import pytest
 from constants import UI_SUB_SUITE_LOGIN_UI, UI_SUIT_LOGIN_PAGE
 from framework.ui.pages.market_page import MarketPage
 from playwright.sync_api import expect
-from settings import settings
 
 
 @allure.suite(UI_SUIT_LOGIN_PAGE)
@@ -24,11 +23,9 @@ class TestAuth:
     @allure.description(
         "An admin have to have opportunity to login via login form on the login page"
     )
-    def test_admin_login(self, login_page):
+    def test_admin_login(self, login_page, admin_user):
         with allure.step("Login as admin"):
-            market_page: MarketPage = login_page.goto().login(
-                settings.admin_email, settings.admin_password
-            )
+            market_page: MarketPage = login_page.goto().login(admin_user.email, admin_user.password)
 
         with allure.step("Check that the user's name is present on the Market page in the navbar"):
-            expect(market_page.nav_bar.user_link).to_have_text(settings.admin_name)
+            expect(market_page.nav_bar.user_link).to_have_text(admin_user.full_name)

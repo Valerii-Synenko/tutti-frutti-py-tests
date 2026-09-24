@@ -13,6 +13,7 @@ dependencies = [
     "ruff==0.16.8",
     "ty==0.0.83",
     "psycopg==3.3.6",
+    "bcrypt>=5.0.0",
 ]
 
 [project.optional-dependencies]
