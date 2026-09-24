@@ -37,7 +37,7 @@ def insert_user_into_db(
         password = faker.password(length=8)
         hashed_password = hash_password(password)
         user = InsertUser(
-            id=faker.uuid4(),
+            id=faker.uuid4(cast_to=None),
             email=faker.email(),
             hashed_password=hashed_password,
             full_name=faker.name(),
