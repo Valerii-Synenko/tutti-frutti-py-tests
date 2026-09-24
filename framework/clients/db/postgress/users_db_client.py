@@ -13,7 +13,7 @@ class UsersDb:
 
     def insert_user(self, user_row: UserRow) -> None:
         """
-        Inserts a user into the database.
+        Inserts a user into the `users` table in the `users` database.
 
         Parameters
         ----------
@@ -36,7 +36,7 @@ class UsersDb:
 
     def delete_user_by_id(self, user_id: UUID) -> None:
         """
-        Deletes a user by id.
+        Deletes a user from the `users` table in the `users` db.
 
         Parameters
         ----------
