@@ -4,7 +4,6 @@ from constants import REST_API_SUB_SUITE_LOGIN, REST_API_SUITE_AUTH
 from framework.models.api.rest.user.login_response_model import LoginResponseModel
 from framework.utils.assertions import assert_matches_schema
 from playwright.sync_api import APIResponse
-from settings import settings
 
 
 @allure.suite(REST_API_SUITE_AUTH)
@@ -23,10 +22,10 @@ class TestUser:
     @allure.title("Login as an admin")
     @allure.severity(allure.severity_level.CRITICAL)
     @allure.description("An admin have to have opportunity to login via common endpoint")
-    def test_user_login(self, auth_api_client):
+    def test_user_login(self, auth_api_client, admin_user):
         with allure.step("Login as a user with admin's credentials."):
             response: APIResponse = auth_api_client.user_login(
-                settings.admin_email, settings.admin_password
+                admin_user.email, admin_user.password
             )
 
         with allure.step("Validate response."):
