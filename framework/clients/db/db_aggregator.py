@@ -4,6 +4,10 @@ from framework.clients.db.postgress.users_db_client import UsersDb
 
 
 class DbAggregator:
+    """
+    Aggregates connections to databases.
+    """
+
     @cached_property
     def users_db(self) -> UsersDb:
         return UsersDb()
