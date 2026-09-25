@@ -4,6 +4,7 @@ import bcrypt
 def hash_password(plaintext: str) -> str:
     """
     Hashes a plaintext password using bcrypt.
+    (https://pypi.org/project/bcrypt/)
 
     Parameters
     ----------
