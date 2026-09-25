@@ -1,15 +1,18 @@
 from uuid import UUID
 
-import psycopg
-from psycopg.rows import dict_row
 from settings import settings
 
+from framework.clients.db.postgress.postgres_client import BasePostgresClient
 from framework.models.db.user_row import UserRow
 
 
-class UsersDb:
+class UsersDb(BasePostgresClient):
+    """
+    Postgres bd client for the `users` database.
+    """
+
     def __init__(self):
-        self.users_db_host = settings.user_db_url
+        super().__init__(settings.user_db_url)
 
     def insert_user(self, user_row: UserRow) -> None:
         """
@@ -20,10 +23,7 @@ class UsersDb:
         user_row: UserRow
             The user row model to insert.
         """
-        with (
-            psycopg.connect(self.users_db_host, row_factory=dict_row) as con,  # ty: ignore[invalid-argument-type]
-            con.cursor() as cur,
-        ):
+        with self._pool.connection() as con, con.cursor() as cur:
             cur.execute(
                 "INSERT INTO users "
                 "(id, email, hashed_password, full_name, created_at, is_admin, is_seller) "
@@ -43,9 +43,6 @@ class UsersDb:
         user_id: UUID
             The id of the user to delete.
         """
-        with (
-            psycopg.connect(self.users_db_host, row_factory=dict_row) as con,  # ty: ignore[invalid-argument-type]
-            con.cursor() as cur,
-        ):
+        with self._pool.connection() as con, con.cursor() as cur:
             cur.execute("DELETE FROM users WHERE id = %(id)s", {"id": user_id})
             con.commit()

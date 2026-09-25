@@ -3,7 +3,7 @@ from uuid import UUID
 
 import pytest
 from faker import Faker
-from framework.clients.db.postgress.users_db_client import UsersDb
+from framework.clients.db.db_aggregator import DbAggregator
 from framework.models.db.insert_user import InsertUser
 from framework.utils.hashing import hash_password
 from playwright.sync_api import APIRequestContext, Playwright
@@ -16,9 +16,11 @@ def api_context(playwright: Playwright) -> Generator[APIRequestContext]:
     request_context.dispose()
 
 
-@pytest.fixture
-def user_db_client():
-    return UsersDb()
+@pytest.fixture(scope="session")
+def db_aggregator():
+    aggregator = DbAggregator()
+    yield aggregator
+    aggregator.close_all()
 
 
 @pytest.fixture
@@ -27,10 +29,7 @@ def faker():
 
 
 @pytest.fixture
-def insert_user_into_db(
-    faker: Faker, user_db_client: UsersDb
-) -> Generator[Callable[..., InsertUser]]:
-
+def insert_user_into_db(faker, db_aggregator):
     created_ids: list[UUID] = []
 
     def _insert_user(*, is_admin: bool = False, is_seller: bool = False) -> InsertUser:
@@ -47,14 +46,14 @@ def insert_user_into_db(
             password=password,
         )
 
-        user_db_client.insert_user(user)
+        db_aggregator.users_db.insert_user(user)
         created_ids.append(user.id)
         return user
 
     yield _insert_user
 
     for user_id in created_ids:
-        user_db_client.delete_user_by_id(user_id)
+        db_aggregator.users_db.delete_user_by_id(user_id)
 
 
 @pytest.fixture

@@ -10,10 +10,11 @@ dependencies = [
     "faker==40.39.0",
     "allure-pytest==2.16.1",
     "allure-python-commons==2.16.1",
-    "ruff==0.16.8",
-    "ty==0.0.83",
+    "ruff==0.16.9",
+    "ty==0.0.84",
     "psycopg==3.3.6",
     "bcrypt>=5.0.0",
+    "psycopg-pool>=3.3.3",
 ]
 
 [project.optional-dependencies]
