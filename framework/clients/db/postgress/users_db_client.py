@@ -6,7 +6,7 @@ from framework.clients.db.postgress.postgres_client import PostgresClient
 from framework.models.db.user_row import UserRow
 
 
-class UsersDb(PostgresClient):
+class UsersDbClient(PostgresClient):
     """
     Postgres bd client for the `users` database.
     """

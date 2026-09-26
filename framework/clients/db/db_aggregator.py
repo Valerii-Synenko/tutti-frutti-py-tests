@@ -1,6 +1,6 @@
 from functools import cached_property
 
-from framework.clients.db.postgress.users_db_client import UsersDb
+from framework.clients.db.postgress.users_db_client import UsersDbClient
 
 
 class DbAggregator:
@@ -9,8 +9,8 @@ class DbAggregator:
     """
 
     @cached_property
-    def users_db(self) -> UsersDb:
-        return UsersDb()
+    def users_db(self) -> UsersDbClient:
+        return UsersDbClient()
 
     def close_all(self) -> None:
         """
