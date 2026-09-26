@@ -1,6 +1,6 @@
 from functools import cached_property
 
-from framework.clients.db.postgress.users_client import UsersDbClient
+from framework.db.clients.postgress.users_client import UsersDbClient
 
 
 class DbHub:

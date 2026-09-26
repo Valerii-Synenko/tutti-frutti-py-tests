@@ -1,7 +1,7 @@
 import allure
 from playwright.sync_api import APIRequestContext, APIResponse
 
-from framework.clients.rest.base_client import BaseClient
+from framework.api.clients.rest.base_client import BaseClient
 
 
 class AuthClient(BaseClient):

@@ -1,7 +1,7 @@
 import allure
 import pytest
 from constants import REST_API_SUB_SUITE_LOGIN, REST_API_SUITE_AUTH
-from framework.models.api.rest.user.login_response import LoginResponseModel
+from framework.api.models.api.rest.user.login_response import LoginResponseModel
 from framework.utils.assertions import assert_matches_schema
 from playwright.sync_api import APIResponse
 

@@ -1,5 +1,5 @@
 import pytest
-from framework.clients.rest.auth_client import AuthClient
+from framework.api.clients.rest import AuthClient
 
 
 @pytest.fixture

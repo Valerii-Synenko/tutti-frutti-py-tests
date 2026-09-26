@@ -1,4 +1,4 @@
-from framework.models.db.user_row import UserRow
+from framework.db.models.db.user_row import UserRow
 
 
 class InsertUser(UserRow):
