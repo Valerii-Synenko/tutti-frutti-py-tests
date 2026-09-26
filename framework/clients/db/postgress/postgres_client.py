@@ -1,7 +1,7 @@
 from psycopg_pool import ConnectionPool
 
 
-class BasePostgresClient:
+class PostgresClient:
     """
     The base client for all Postgres databases.
     """

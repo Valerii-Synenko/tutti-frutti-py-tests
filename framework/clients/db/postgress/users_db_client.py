@@ -2,11 +2,11 @@ from uuid import UUID
 
 from settings import settings
 
-from framework.clients.db.postgress.postgres_client import BasePostgresClient
+from framework.clients.db.postgress.postgres_client import PostgresClient
 from framework.models.db.user_row import UserRow
 
 
-class UsersDb(BasePostgresClient):
+class UsersDb(PostgresClient):
     """
     Postgres bd client for the `users` database.
     """
