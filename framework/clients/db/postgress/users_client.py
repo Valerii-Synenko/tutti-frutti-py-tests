@@ -2,11 +2,11 @@ from uuid import UUID
 
 from settings import settings
 
-from framework.clients.db.postgress.postgres_client import PostgresClient
+from framework.clients.db.postgress.base_client import BasePostgresClient
 from framework.models.db.user_row import UserRow
 
 
-class UsersDbClient(PostgresClient):
+class UsersDbClient(BasePostgresClient):
     """
     Postgres bd client for the `users` database.
     """
@@ -16,12 +16,12 @@ class UsersDbClient(PostgresClient):
 
     def insert_user(self, user_row: UserRow) -> None:
         """
-                Inserts a user into the `users` table in the `users` database.
-        `
-                Parameters
-                ----------
-                user_row: UserRow
-                    The user row model to insert.
+        Inserts a user into the `users` table in the `users` database.
+
+        Parameters
+        ----------
+        user_row: UserRow
+            The user row model to insert.
         """
         with self._pool.connection() as con, con.cursor() as cur:
             cur.execute(

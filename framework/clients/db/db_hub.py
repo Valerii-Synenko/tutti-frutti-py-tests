@@ -1,9 +1,9 @@
 from functools import cached_property
 
-from framework.clients.db.postgress.users_db_client import UsersDbClient
+from framework.clients.db.postgress.users_client import UsersDbClient
 
 
-class DbAggregator:
+class DbHub:
     """
     Aggregates connections to databases.
     """

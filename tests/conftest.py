@@ -3,7 +3,7 @@ from uuid import UUID
 
 import pytest
 from faker import Faker
-from framework.clients.db.db_aggregator import DbAggregator
+from framework.clients.db.db_hub import DbHub
 from framework.models.db.insert_user import InsertUser
 from framework.utils.hashing import hash_password
 from playwright.sync_api import APIRequestContext, Playwright
@@ -18,7 +18,7 @@ def api_context(playwright: Playwright) -> Generator[APIRequestContext]:
 
 @pytest.fixture(scope="session")
 def db_aggregator():
-    aggregator = DbAggregator()
+    aggregator = DbHub()
     yield aggregator
     aggregator.close_all()
 
