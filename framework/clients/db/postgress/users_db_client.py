@@ -16,12 +16,12 @@ class UsersDb(BasePostgresClient):
 
     def insert_user(self, user_row: UserRow) -> None:
         """
-        Inserts a user into the `users` table in the `users` database.
-
-        Parameters
-        ----------
-        user_row: UserRow
-            The user row model to insert.
+                Inserts a user into the `users` table in the `users` database.
+        `
+                Parameters
+                ----------
+                user_row: UserRow
+                    The user row model to insert.
         """
         with self._pool.connection() as con, con.cursor() as cur:
             cur.execute(
