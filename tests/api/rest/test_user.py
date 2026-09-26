@@ -1,7 +1,7 @@
 import allure
 import pytest
 from constants import REST_API_SUB_SUITE_LOGIN, REST_API_SUITE_AUTH
-from framework.api.models.api.rest.user.login_response import LoginResponseModel
+from framework.api.models.rest.rest.user.login_response import LoginResponseModel
 from framework.utils.assertions import assert_matches_schema
 from playwright.sync_api import APIResponse
 
@@ -24,9 +24,7 @@ class TestUser:
     @allure.description("An admin have to have opportunity to login via common endpoint")
     def test_user_login(self, auth_api_client, admin_user):
         with allure.step("Login as a user with admin's credentials."):
-            response: APIResponse = auth_api_client.user_login(
-                admin_user.email, admin_user.password
-            )
+            response: APIResponse = auth_api_client.user_login(admin_user.email, admin_user.password)
 
         with allure.step("Validate response."):
             assert response.status == 200, f"Expected status code 200, but got {response.status}"

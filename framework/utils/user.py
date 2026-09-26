@@ -1,7 +1,7 @@
 from faker import Faker
 
 from framework.api.clients.rest import AuthClient
-from framework.api.models.api.rest.user.login_response import LoginResponseModel
+from framework.api.models.rest.rest.user.login_response import LoginResponseModel
 from framework.db.clients.postgress.users_client import UsersDbClient
 from framework.db.models.db.user_row import UserRow
 from framework.utils.hashing import hash_password
