@@ -9,7 +9,7 @@ from framework.utils.user import AuthenticatedUser, create
 from playwright.sync_api import APIRequestContext, Playwright
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def api_context(playwright: Playwright) -> Generator[APIRequestContext]:
     request_context = playwright.request.new_context()
     yield request_context
@@ -17,19 +17,19 @@ def api_context(playwright: Playwright) -> Generator[APIRequestContext]:
 
 
 @pytest.fixture(scope="session")
-def db_hub():
+def db_hub() -> Generator[DbHub]:
     aggregator = DbHub()
     yield aggregator
     aggregator.close_all()
 
 
-@pytest.fixture
-def api_hub(api_context: APIRequestContext) -> ApiHub:
+@pytest.fixture(scope="session")
+def api_hub(api_context) -> ApiHub:
     return ApiHub(api_context)
 
 
-@pytest.fixture
-def faker():
+@pytest.fixture(scope="session")
+def faker() -> Faker:
     return Faker()
 
 
