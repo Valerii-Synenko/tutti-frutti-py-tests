@@ -1,7 +1,7 @@
 from faker import Faker
 
-from framework.api.clients.rest import AuthClient
-from framework.api.models.rest.rest.user.login_response import LoginResponseModel
+from framework.api.rest.clients.auth import AuthClient
+from framework.api.rest.response_models.user import LoginResponseModel
 from framework.db.clients.postgress.users_client import UsersDbClient
 from framework.db.models.db.user_row import UserRow
 from framework.utils.hashing import hash_password
@@ -77,6 +77,11 @@ def create(
     users_db.insert_user(user_row)
 
     response = auth_client.user_login(email, password)
+    if response.status != 200:
+        raise ValueError(
+            f"Failed to authenticate user: expected status 200, got {response.status}] ({response.text()})"
+        )
+
     bearer_token = LoginResponseModel.model_validate(response.json()).access_token
 
     return AuthenticatedUser(
