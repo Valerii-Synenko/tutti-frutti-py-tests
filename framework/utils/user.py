@@ -4,13 +4,13 @@ from framework.api.rest.clients.auth import AuthClient
 from framework.api.rest.models.user.user_request import LoginUserRequestFactory
 from framework.api.rest.models.user.user_response import LoginUserResponseModel
 from framework.db.clients.postgress.users_client import UsersDbClient
-from framework.db.models.db.user_row import UserRow
+from framework.db.models.postgres.users_db import UserRecordModel
 from framework.utils.hashing import hash_password
 
 
-class InsertUserIntoDB(UserRow):
+class InsertUserIntoDB(UserRecordModel):
     """
-    A `UserRow` seeded directly into the database for tests, paired with its plaintext password.
+    A `UserRecordModel` seeded directly into the database for tests, paired with its plaintext password.
 
     The `users` table only stores the hashed password, so the plaintext value has to be carried
     alongside the row - it's necessary to log the user in through the UI/API but can't be recovered
@@ -66,7 +66,7 @@ def create(
     password = faker.password(length=8)
     hashed_password = hash_password(password)
 
-    user_row = UserRow(
+    user_row = UserRecordModel(
         id=faker.uuid4(cast_to=None),
         email=email,
         hashed_password=hashed_password,

@@ -4,7 +4,7 @@ from uuid import UUID
 from pydantic import BaseModel
 
 
-class UserRow(BaseModel):
+class UserRecordModel(BaseModel):
     id: UUID
     email: str
     hashed_password: str
