@@ -1,7 +1,0 @@
-import pytest
-from framework.api.clients.rest import AuthClient
-
-
-@pytest.fixture
-def auth_api_client(api_context):
-    return AuthClient(api_context)

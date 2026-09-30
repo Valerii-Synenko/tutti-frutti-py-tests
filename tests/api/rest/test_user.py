@@ -1,8 +1,7 @@
 import allure
 import pytest
 from constants import REST_API_SUB_SUITE_LOGIN, REST_API_SUITE_AUTH
-from framework.api.models.rest.rest.user.login_response import LoginResponseModel
-from framework.utils.assertions import assert_matches_schema
+from framework.api.rest.models.user.user_response import RegisterUserResponseModel
 from playwright.sync_api import APIResponse
 
 
@@ -19,13 +18,13 @@ class TestUser:
     """
 
     @allure.id("TC-0001")
-    @allure.title("Login as an admin")
+    @allure.title("New user registration")
     @allure.severity(allure.severity_level.CRITICAL)
-    @allure.description("An admin have to have opportunity to login via common endpoint")
-    def test_user_login(self, auth_api_client, admin_user):
-        with allure.step("Login as a user with admin's credentials."):
-            response: APIResponse = auth_api_client.user_login(admin_user.email, admin_user.password)
+    @allure.description("Testa verify that new user can be registered")
+    def test_user_registration(self, api_hub, user_for_registration):
+        with allure.step("Register a new user."):
+            response: APIResponse = api_hub.auth_client.user_registration(user_for_registration)
 
         with allure.step("Validate response."):
-            assert response.status == 200, f"Expected status code 200, but got {response.status}"
-            assert_matches_schema(LoginResponseModel, response.json())
+            assert response.status == 201, f"Expected status code 201, but got {response.status}"
+            RegisterUserResponseModel.model_validate(response.json())

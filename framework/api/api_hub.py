@@ -2,7 +2,7 @@ from functools import cached_property
 
 from playwright.sync_api import APIRequestContext
 
-from framework.api.clients.rest import AuthClient
+from framework.api.rest.clients.auth import AuthClient
 
 
 class ApiHub:

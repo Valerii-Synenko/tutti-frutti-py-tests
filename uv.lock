@@ -983,6 +983,12 @@ wheels = [
 ]
 
 [[package]]
+name = "modelfactory"
+version = "15"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d4/83/20f39f697becadee5553165b784e194e8b36fd04504e534c70d6c4d4c4af/ModelFactory-15.tar.gz", hash = "sha256:bd74b9a98e4c079acf5aa557437dc2f52d589d376c72f3a60aca57d898bb9df3", size = 2887, upload-time = "2018-06-15T07:23:09.154Z" }
+
+[[package]]
 name = "msgpack"
 version = "1.2.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1229,6 +1235,19 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/f9/e2/3e91f31a7d2b083fe6ef3fa267035b518369d9511ffab804f839851d2779/pluggy-1.6.0.tar.gz", hash = "sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3", size = 69412, upload-time = "2025-05-15T12:30:07.975Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/54/20/4d324d65cc6d9205fabedc306948156824eb9f0ee1633355a8f7ec5c66bf/pluggy-1.6.0-py3-none-any.whl", hash = "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746", size = 20538, upload-time = "2025-05-15T12:30:06.134Z" },
+]
+
+[[package]]
+name = "polyfactory"
+version = "3.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "faker" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/85/68/7717bd9e63ed254617a7d3dc9260904fb736d6ea203e58ffddcb186c64e4/polyfactory-3.3.0.tar.gz", hash = "sha256:237258b6ff43edf362ffd1f68086bb796466f786adfa002b0ac256dbf2246e9a", size = 348668, upload-time = "2026-02-22T09:46:28.01Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/dd/34/b6f19941adcdaf415b5e8a8d577499f5b6a76b59cbae37f9b125a9ffe9f2/polyfactory-3.3.0-py3-none-any.whl", hash = "sha256:686abcaa761930d3df87b91e95b26b8d8cb9fdbbbe0b03d5f918acff5c72606e", size = 62707, upload-time = "2026-02-22T09:46:25.985Z" },
 ]
 
 [[package]]
@@ -1976,6 +1995,8 @@ dependencies = [
     { name = "allure-python-commons" },
     { name = "bcrypt" },
     { name = "faker" },
+    { name = "modelfactory" },
+    { name = "polyfactory" },
     { name = "psycopg" },
     { name = "psycopg-pool" },
     { name = "pydantic" },
@@ -2020,7 +2041,9 @@ requires-dist = [
     { name = "grpcio", marker = "extra == 'grpc'", specifier = ">=1.68.0" },
     { name = "grpcio-tools", marker = "extra == 'grpc'", specifier = ">=1.68.0" },
     { name = "locust", marker = "extra == 'load'", specifier = ">=2.32.0" },
+    { name = "modelfactory", specifier = ">=15" },
     { name = "playwright", marker = "extra == 'ui'", specifier = ">=1.48.0" },
+    { name = "polyfactory", specifier = ">=3.3.0" },
     { name = "protobuf", marker = "extra == 'grpc'", specifier = ">=5.28.0" },
     { name = "psycopg", specifier = "==3.3.6" },
     { name = "psycopg", extras = ["binary"], marker = "extra == 'db'", specifier = ">=3.2.0" },

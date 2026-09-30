@@ -46,3 +46,24 @@ class UsersDbClient(BasePostgresClient):
         with self._pool.connection() as con, con.cursor() as cur:
             cur.execute("DELETE FROM users WHERE id = %(id)s", {"id": user_id})
             con.commit()
+
+    def delete_user_by_email(self, email: str) -> None:
+        """
+        Deletes a user from the database based on their email.
+
+        This method removes the user record associated with the provided email from
+        the `users` table in the database. The operation is executed within a database
+        connection and transaction context to ensure data consistency.
+
+        Parameters
+        ----------
+        email : str
+            The email address of the user to be removed from the database.
+
+        Returns
+        -------
+        None
+        """
+        with self._pool.connection() as con, con.cursor() as cur:
+            cur.execute("DELETE FROM users WHERE email = %(email)s", {"email": email})
+            con.commit()
