@@ -1,11 +1,12 @@
+from decimal import Decimal
 from typing import Annotated
 
-from constants import LATIN_LETTERS
+from constants import LATIN_LETTERS, LATIN_LETTERS_STRICT
 from polyfactory.factories.pydantic_factory import ModelFactory
 from pydantic import BaseModel, Field
 
 Month = Annotated[int, Field(ge=1, le=12)]
-Tag = Annotated[str, Field(min_length=1, max_length=10, pattern=LATIN_LETTERS)]
+Tag = Annotated[str, Field(min_length=1, max_length=10)]
 
 
 class FruitAttributes(BaseModel):
@@ -18,15 +19,15 @@ class FruitAttributesFactory(ModelFactory[FruitAttributes]):
 
 
 class CreateFruitRequestModel(BaseModel):
-    name: Annotated[str, Field(min_length=1, max_length=120, pattern=LATIN_LETTERS)]
-    slug: Annotated[str, Field(min_length=1, max_length=120, pattern=LATIN_LETTERS)]
-    description: Annotated[str, Field(min_length=1, max_length=2000)]
-    origin: Annotated[str, Field(min_length=4, max_length=45, pattern=LATIN_LETTERS)]
+    name: Annotated[str, Field(min_length=1, max_length=120, pattern=LATIN_LETTERS_STRICT)]
+    slug: Annotated[str, Field(min_length=1, max_length=120, pattern=r"^[a-z]+(?:-[a-z]+)*$")]
+    description: Annotated[str, Field(min_length=1, max_length=2000, pattern=LATIN_LETTERS_STRICT)]
+    origin: Annotated[str, Field(min_length=4, max_length=45, pattern=LATIN_LETTERS_STRICT)]
     is_organic: bool
     seasonal_months: Annotated[set[Month], Field(min_length=1, max_length=5)]
-    tags: Annotated[set[Tag], Field(min_length=10, max_length=20, pattern=LATIN_LETTERS)]
+    tags: Annotated[set[Tag], Field(min_length=10, max_length=20)]
     image_url: Annotated[str, Field(min_length=1, max_length=100)]
-    base_price_hint_eur: Annotated[float, Field(gt=0.0)]
+    base_price_hint_eur: Annotated[Decimal, Field(gt=0, max_digits=6, decimal_places=2)]
     initial_quantity: Annotated[int, Field(gt=0)]
     attributes: FruitAttributes
 
