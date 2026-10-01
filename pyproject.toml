@@ -4,7 +4,7 @@ version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
     "pytest==9.1.1",
-    "pydantic==2.14.0b1",
+    "pydantic[email]==2.14.0b1",
     "pydantic-settings==2.15.0",
     "python-dotenv==1.2.3",
     "faker==40.39.0",
