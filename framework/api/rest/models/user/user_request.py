@@ -1,16 +1,16 @@
 from __future__ import annotations
 
-from faker import Faker
-from polyfactory.factories.pydantic_factory import ModelFactory
-from pydantic import BaseModel
+from typing import Annotated
 
-faker = Faker()
+from constants import LATIN_LETTERS_STRICT
+from polyfactory.factories.pydantic_factory import ModelFactory
+from pydantic import BaseModel, EmailStr, Field
 
 
 class RegisterUserRequestModel(BaseModel):
-    email: str
+    email: EmailStr
     password: str
-    full_name: str
+    full_name: Annotated[str, Field(min_length=1, pattern=LATIN_LETTERS_STRICT)]
 
 
 class RegisterUserRequestFactory(ModelFactory[RegisterUserRequestModel]):
@@ -18,7 +18,7 @@ class RegisterUserRequestFactory(ModelFactory[RegisterUserRequestModel]):
 
 
 class LoginUserRequestModel(BaseModel):
-    username: str
+    username: EmailStr
     password: str
 
 
