@@ -1,14 +1,16 @@
 from typing import Annotated
 
+from constants import LATIN_LETTERS
 from polyfactory.factories.pydantic_factory import ModelFactory
 from pydantic import BaseModel, Field
 
 Month = Annotated[int, Field(ge=1, le=12)]
+Tag = Annotated[str, Field(ge=1, le=12, pattern=LATIN_LETTERS)]
 
 
 class FruitAttributes(BaseModel):
-    shelf_life_days: Annotated[int, Field(gt=0, lt=11)]
-    storage: Annotated[str, Field(min_length=1, max_length=20)]
+    shelf_life_days: Annotated[int, Field(gt=0, lt=50)]
+    storage: Annotated[str, Field(min_length=1, max_length=10, pattern=LATIN_LETTERS)]
 
 
 class FruitAttributesFactory(ModelFactory[FruitAttributes]):
@@ -16,27 +18,18 @@ class FruitAttributesFactory(ModelFactory[FruitAttributes]):
 
 
 class CreateFruitRequestModel(BaseModel):
-    name: Annotated[str, Field(min_length=1, max_length=20)]
-    slug: Annotated[str, Field(min_length=1, max_length=20)]
-    description: Annotated[str, Field(min_length=1, max_length=20)]
-    origin: Annotated[str, Field(min_length=1, max_length=20)]
+    name: Annotated[str, Field(min_length=1, max_length=120, pattern=LATIN_LETTERS)]
+    slug: Annotated[str, Field(min_length=1, max_length=120, pattern=LATIN_LETTERS)]
+    description: Annotated[str, Field(min_length=1, max_length=2000, pattern=LATIN_LETTERS)]
+    origin: Annotated[str, Field(min_length=1, max_length=100, pattern=LATIN_LETTERS)]
     is_organic: bool
-    seasonal_months: Annotated[list[Month], Field(min_length=1, max_length=12)]
-    tags: Annotated[list[str], Field(min_length=1)]
+    seasonal_months: Annotated[set[Month], Field(min_length=1, max_length=12)]
+    tags: Annotated[set[Tag], Field(min_length=10, max_length=20, pattern=LATIN_LETTERS)]
     image_url: Annotated[str, Field(min_length=1, max_length=100)]
     base_price_hint_eur: Annotated[float, Field(gt=0.0)]
+    initial_quantity: Annotated[int, Field(gt=0)]
     attributes: FruitAttributes
 
 
 class CreateFruitRequestFactory(ModelFactory[CreateFruitRequestModel]):
     __model__ = CreateFruitRequestModel
-
-
-asd = CreateFruitRequestFactory.build(
-    attributes=FruitAttributesFactory.build(
-        factory_use_construct=True,
-    ),
-    factory_use_construct=True,
-)
-
-print(asd)
