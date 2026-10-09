@@ -1,4 +1,6 @@
+import os
 from collections.abc import Callable, Generator
+from datetime import datetime
 from uuid import UUID
 
 import pytest
@@ -8,6 +10,12 @@ from framework.api.rest.models.user.user_request import RegisterUserRequestFacto
 from framework.db.db_hub import DbHub
 from framework.utils.user import AuthenticatedUser, create
 from playwright.sync_api import APIRequestContext, Playwright
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_configure():
+    """Sets a default Qase run title before the qase-pytest plugin reads its config."""
+    os.environ.setdefault("QASE_TESTOPS_RUN_TITLE", f"Run from local {datetime.now():%Y-%m-%d %H:%M}")
 
 
 @pytest.fixture(scope="session")

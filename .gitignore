@@ -4,7 +4,7 @@ __pycache__/
 .env
 .idea/
 reports/
-allure-results/
+build/
 .pytest_cache/
 .ruff_cache/
 *.egg-info/

@@ -1,10 +1,6 @@
-# REST API
-REST_API_SUITE_AUTH = "Authentication"
-REST_API_SUB_SUITE_LOGIN = "Login"
-
-# UI
-UI_SUIT_LOGIN_PAGE = "Login Page"
-UI_SUB_SUITE_LOGIN_UI = "Login"
+# Qase suites (dot notation creates nested suites)
+QASE_SUITE_LOGIN = "User & Auth.Login"
+QASE_SUITE_REGISTRATION = "User & Auth.Registration"
 
 # common
 LATIN_LETTERS = r"^[A-Za-z]+$"

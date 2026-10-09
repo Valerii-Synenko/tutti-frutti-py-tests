@@ -1,7 +1,7 @@
 from typing import Self
 
-import allure
 from playwright.sync_api import Page
+from qase.pytest import qase
 from settings import settings
 
 from framework.ui.components.nav_bar import NavBar
@@ -20,7 +20,7 @@ class BasePage:
         """
         return self.__class__.__name__
 
-    @allure.step("Go to {0}")
     def goto(self) -> Self:
-        self.page.goto(self.page_url)
+        with qase.step(f"Go to {self}"):
+            self.page.goto(self.page_url)
         return self
