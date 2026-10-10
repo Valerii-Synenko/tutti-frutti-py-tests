@@ -9,7 +9,7 @@ dependencies = [
     "python-dotenv==1.2.3",
     "faker==40.39.0",
     "ruff==0.16.9",
-    "ty==0.0.84",
+    "ty==0.0.85",
     "psycopg==3.3.6",
     "bcrypt>=5.0.0",
     "psycopg-pool>=3.3.3",
@@ -59,10 +59,3 @@ possibly-unresolved-reference = "warn"
 pythonpath = ["."]
 addopts = "-s --import-mode=importlib"
 testpaths = ["tests"]
-markers = [
-    "api: REST/gRPC API tests",
-    "ui: Playwright UI tests",
-    "db: Mongo/Postgres data tests",
-    "grpc: gRPC-specific tests",
-    "ai: AI assistant / LLM eval tests (DeepEval)",
-]
