@@ -1,36 +1,30 @@
 from decimal import Decimal
 from typing import Annotated
 
-from constants import LATIN_LETTERS, LATIN_LETTERS_STRICT
-from polyfactory.factories.pydantic_factory import ModelFactory
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 Month = Annotated[int, Field(ge=1, le=12)]
 Tag = Annotated[str, Field(min_length=1, max_length=10)]
 
 
 class FruitAttributes(BaseModel):
-    shelf_life_days: Annotated[int, Field(gt=0, lt=50)]
-    storage: Annotated[str, Field(min_length=1, max_length=10, pattern=LATIN_LETTERS)]
+    model_config = ConfigDict(extra="allow")
 
-
-class FruitAttributesFactory(ModelFactory[FruitAttributes]):
-    __model__ = FruitAttributes
+    shelf_life_days: int
+    storage: str
 
 
 class CreateFruitRequestModel(BaseModel):
-    name: Annotated[str, Field(min_length=1, max_length=120, pattern=LATIN_LETTERS_STRICT)]
-    slug: Annotated[str, Field(min_length=1, max_length=120, pattern=r"^[a-z]+(?:-[a-z]+)*$")]
-    description: Annotated[str, Field(min_length=1, max_length=2000, pattern=LATIN_LETTERS_STRICT)]
-    origin: Annotated[str, Field(min_length=4, max_length=45, pattern=LATIN_LETTERS_STRICT)]
+    model_config = ConfigDict(extra="allow")
+
+    name: str
+    slug: str
+    description: str
+    origin: str
     is_organic: bool
     seasonal_months: Annotated[set[Month], Field(min_length=1, max_length=5)]
     tags: Annotated[set[Tag], Field(min_length=10, max_length=20)]
-    image_url: Annotated[str, Field(min_length=1, max_length=100)]
-    base_price_hint_eur: Annotated[Decimal, Field(gt=0, max_digits=6, decimal_places=2)]
-    initial_quantity: Annotated[int, Field(gt=0)]
+    image_url: str
+    base_price_hint_eur: Decimal
+    initial_quantity: int
     attributes: FruitAttributes
-
-
-class CreateFruitRequestFactory(ModelFactory[CreateFruitRequestModel]):
-    __model__ = CreateFruitRequestModel

@@ -1,4 +1,5 @@
 import os
+import warnings
 from collections.abc import Callable, Generator
 from datetime import datetime
 from uuid import UUID
@@ -6,16 +7,43 @@ from uuid import UUID
 import pytest
 from faker import Faker
 from framework.api.api_hub import ApiHub
-from framework.api.rest.models.user.user_request import RegisterUserRequestFactory
+from framework.api.rest.models.user.user_request import RegisterUserRequestModel
 from framework.db.db_hub import DbHub
+from framework.utils.qase import fetch_case_titles
 from framework.utils.user import AuthenticatedUser, create
 from playwright.sync_api import APIRequestContext, Playwright
+from qase.pytest import qase
+from qase.pytest.plugin import QasePytestPlugin
 
 
 @pytest.hookimpl(tryfirst=True)
 def pytest_configure():
     """Sets a default Qase run title before the qase-pytest plugin reads its config."""
     os.environ.setdefault("QASE_TESTOPS_RUN_TITLE", f"Run from local {datetime.now():%Y-%m-%d %H:%M}")
+
+
+def pytest_collection_modifyitems(config, items):
+    """Titles results in Qase runs after their linked test cases instead of the test function names."""
+    if (config.getoption("qase_mode", default=None) or os.environ.get("QASE_MODE")) != "testops":
+        return
+
+    linked_items = {
+        item: ids[0]
+        for item in items
+        if not item.get_closest_marker("qase_title") and (ids := QasePytestPlugin.get_qase_ids(item))
+    }
+    if not linked_items:
+        return
+
+    try:
+        titles = fetch_case_titles(set(linked_items.values()))
+    except (OSError, KeyError, ValueError) as e:
+        warnings.warn(f"Could not fetch test case titles from Qase: {e}", stacklevel=1)
+        return
+
+    for item, case_id in linked_items.items():
+        if title := titles.get(case_id):
+            item.add_marker(qase.title(title))
 
 
 @pytest.fixture(scope="session")
@@ -64,8 +92,10 @@ def admin_user(create_user: Callable[..., AuthenticatedUser]) -> AuthenticatedUs
 
 @pytest.fixture
 def user_for_registration(faker, db_hub):
-    user_payload = RegisterUserRequestFactory().build(
-        full_name=faker.user_name(), email=faker.email(), password=faker.password(length=8)
+    user_payload = RegisterUserRequestModel(
+        full_name=f"{faker.first_name()} {faker.last_name()}",
+        email=faker.email(),
+        password=faker.password(length=8),
     )
 
     yield user_payload

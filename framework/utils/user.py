@@ -1,7 +1,7 @@
 from faker import Faker
 
 from framework.api.rest.clients.auth import AuthClient
-from framework.api.rest.models.user.user_request import LoginUserRequestFactory
+from framework.api.rest.models.user.user_request import LoginUserRequestModel
 from framework.api.rest.models.user.user_response import LoginUserResponseModel
 from framework.db.clients.postgress.users_client import UsersDbClient
 from framework.db.models.postgres.users_db import UserRecordModel
@@ -77,7 +77,7 @@ def create(
     )
     users_db.insert_user(user_row)
 
-    user_payload = LoginUserRequestFactory().build(username=email, password=password)
+    user_payload = LoginUserRequestModel(username=email, password=password)
     response = auth_client.user_login(user_payload)
 
     if response.status != 200:
