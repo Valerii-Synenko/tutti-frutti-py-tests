@@ -25,7 +25,7 @@ ai = ["deepeval>=2.0"]
 dev = ["ruff>=0.7.0"]
 
 [tool.ruff]
-line-length = 110
+line-length = 120
 target-version = "py314"
 extend-exclude = ["protos"]
 src = ["framework", "tests", "load", "scripts"]
