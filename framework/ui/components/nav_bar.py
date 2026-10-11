@@ -14,3 +14,4 @@ class NavBar:
         self.cart_link = self._nav_bar_component.get_by_label("Cart")
         self.user_link = self._nav_bar_component.get_by_test_id("nav-cabinet-link")
         self.login_button = self._nav_bar_component.get_by_test_id("nav-login-link")
+        self.logout_button = self._nav_bar_component.get_by_test_id("logout-button")
