@@ -14,7 +14,7 @@ class LoginPage(BasePage):
         self.password_input = self.page.get_by_label("Password")
         self.login_button = self.page.get_by_role("button", name="Log in")
 
-    @qase.step("Login as a user")
+    @qase.step("Login with email and password")
     def login(self, email: str, password: str) -> MarketPage:
         self.email_input.fill(email)
         self.password_input.fill(password)
