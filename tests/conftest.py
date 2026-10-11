@@ -38,7 +38,7 @@ def pytest_collection_modifyitems(config, items):
     try:
         titles = fetch_case_titles(set(linked_items.values()))
     except (OSError, KeyError, ValueError) as e:
-        warnings.warn(f"Could not fetch test case titles from Qase: {e}", stacklevel=1)
+        warnings.warn(f"Could not fetch test case titles from the Qase TestOps: {e}", stacklevel=1)
         return
 
     for item, case_id in linked_items.items():
@@ -86,8 +86,8 @@ def create_user(faker, db_hub, api_hub):
 
 
 @pytest.fixture
-def admin_user(create_user: Callable[..., AuthenticatedUser]) -> AuthenticatedUser:
-    return create_user(is_admin=True)
+def buyer_user(create_user: Callable[..., AuthenticatedUser]) -> AuthenticatedUser:
+    return create_user()
 
 
 @pytest.fixture
