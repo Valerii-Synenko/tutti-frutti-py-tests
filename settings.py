@@ -15,11 +15,6 @@ class Settings(BaseSettings):
     admin_password: str
     admin_name: str
     user_db_url: str
-    qase_api_url: str
-    qase_testops_api_token: str
-    qase_testops_project: str
-    qase_mode: str
-    qase_testops_run_complete: bool
 
 
 settings = Settings()
