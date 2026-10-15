@@ -10,7 +10,6 @@ class Settings(BaseSettings):
 
     base_api_url: str
     base_ui_url: str
-    market_page_url: str
     admin_email: str
     admin_password: str
     admin_name: str

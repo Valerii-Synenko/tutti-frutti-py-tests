@@ -1,6 +1,7 @@
 import pytest
 from framework.ui.pages.login_page import LoginPage
 from framework.ui.pages.market_page import MarketPage
+from framework.ui.pages.registrationa import RegistrationPage
 from playwright.sync_api import Page
 from qase.pytest import qase
 
@@ -19,6 +20,11 @@ def pytest_runtest_makereport(item):
 @pytest.fixture
 def login_page(page: Page) -> LoginPage:
     return LoginPage(page)
+
+
+@pytest.fixture
+def registration_page(page: Page) -> RegistrationPage:
+    return RegistrationPage(page)
 
 
 @pytest.fixture
