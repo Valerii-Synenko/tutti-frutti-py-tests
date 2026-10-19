@@ -1,5 +1,8 @@
 from framework.api.rest.models.user.user_request import LoginUserRequestModel
-from framework.api.rest.models.user.user_response import LoginUserResponseModel, RegisterUserResponseModel
+from framework.api.rest.models.user.user_response import (
+    LoginUserResponseModel,
+    RegisterUserResponseModel,
+)
 from qase.pytest import qase
 
 
@@ -17,22 +20,29 @@ class TestUser:
     def test_create_account(self, api_hub, user_for_registration):
         with qase.step(
             title="Register a new user via the API",
-            expected="1. The response status is `201` with a UUID id, and email and full_name equal to the input.\n"
+            expected="1. The response status is `201` with input email and full_name.\n"
             "2. The response has `is_admin` false and `is_seller` false.\n"
             "3. The response has `is_active` true.\n"
             "4. The response has no password or hashed_password field.",
         ):
             register_response = api_hub.auth_client.user_registration(user_for_registration)
 
-            assert register_response.status == 201, f"Unexpected status code: {register_response.status}"
+            assert register_response.status == 201, (
+                f"Unexpected status code: {register_response.status}"
+            )
             user = RegisterUserResponseModel.model_validate(register_response.json())
-            assert user.email == user_for_registration.email, "Unexpected user's email in the response."
-            assert user.full_name == user_for_registration.full_name, "Unexpected user name in the response."
+            assert user.email == user_for_registration.email, (
+                "Unexpected user's email in the response."
+            )
+            assert user.full_name == user_for_registration.full_name, (
+                "Unexpected user name in the response."
+            )
             assert not user.is_admin, "User was registered as an admin."
             assert not user.is_seller, "User was registered as a seller."
 
         with qase.step(
-            title="Login via the API with the same user", expected="The response status is `200` with a token pair."
+            title="Login via the API with the same user",
+            expected="The response status is `200` with a token pair.",
         ):
             login_payload = LoginUserRequestModel(
                 username=user_for_registration.email,
