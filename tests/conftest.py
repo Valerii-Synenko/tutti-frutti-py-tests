@@ -15,7 +15,9 @@ from playwright.sync_api import APIRequestContext, Playwright
 @pytest.hookimpl(tryfirst=True)
 def pytest_configure():
     """Sets a default Qase run title before the qase-pytest plugin reads its config."""
-    os.environ.setdefault("QASE_TESTOPS_RUN_TITLE", f"Run from local {datetime.now():%Y-%m-%d %H:%M}")
+    os.environ.setdefault(
+        "QASE_TESTOPS_RUN_TITLE", f"Run from local {datetime.now():%Y-%m-%d %H:%M}"
+    )
 
 
 @pytest.fixture(scope="session")
@@ -47,14 +49,15 @@ def create_user(faker, db_hub, api_hub):
     created_users_ids: list[UUID] = []
 
     def _create_user(*, is_admin: bool = False, is_seller: bool = False) -> AuthenticatedUser:
-        user = create(faker, db_hub.users_db, api_hub.auth_client, is_admin=is_admin, is_seller=is_seller)
+        user = create(
+            faker, db_hub.users_db, api_hub.auth_client, is_admin=is_admin, is_seller=is_seller
+        )
         created_users_ids.append(user.id)
         return user
 
     yield _create_user
 
-    for user_id in created_users_ids:
-        db_hub.users_db.delete_user_by_id(user_id)
+    db_hub.users_db.delete_users_by_ids(created_users_ids)
 
 
 @pytest.fixture

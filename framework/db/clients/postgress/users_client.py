@@ -34,17 +34,17 @@ class UsersDbClient(BasePostgresClient):
             )
             con.commit()
 
-    def delete_user_by_id(self, user_id: UUID) -> None:
+    def delete_users_by_ids(self, user_ids: list[UUID]) -> None:
         """
-        Deletes a user from the `users` table in the `users` db.
+        Deletes users from the `users` table in the `users` db.
 
         Parameters
         ----------
-        user_id: UUID
-            The id of the user to delete.
+        user_id: List of UUID
+            The ids of the users to delete.
         """
         with self._pool.connection() as con, con.cursor() as cur:
-            cur.execute("DELETE FROM users WHERE id = %(id)s", {"id": user_id})
+            cur.execute("DELETE FROM users WHERE id = ANY(%(ids)s)", {"ids": user_ids})
             con.commit()
 
     def delete_user_by_email(self, email: str) -> None:
