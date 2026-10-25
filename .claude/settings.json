@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "enko-skills": {
+      "source": {
+        "source": "github",
+        "repo": "Valerii-Synenko/enko-skills"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "enko-skills@enko-skills": true
+  }
+}
