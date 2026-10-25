@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from faker import Faker
 
 from framework.api.rest.clients.auth import AuthClient
@@ -10,7 +12,8 @@ from framework.utils.hashing import hash_password
 
 class InsertUserIntoDB(UserRecordModel):
     """
-    A `UserRecordModel` seeded directly into the database for tests, paired with its plaintext password.
+    A `UserRecordModel` seeded directly into the database for tests,
+    paired with its plaintext password.
 
     The `users` table only stores the hashed password, so the plaintext value has to be carried
     alongside the row - it's necessary to log the user in through the UI/API but can't be recovered
@@ -42,12 +45,12 @@ def create(
     is_seller: bool = False,
 ) -> AuthenticatedUser:
     """
-    Creates a user in the `users` database and logs him through the API using the `AuthClient` client.
+    Creates a user in the `users` database and logs him through the API.
 
     Parameters
     ----------
     faker: Faker
-        The Faker instance used to generate random data for the user such as email and password, etc.
+        The Faker instance used to generate random data for the user such as email, password, etc.
     users_db: UsersDbClient
         The client used to insert a user into the `users` database.
     auth_client: AuthClient
@@ -80,9 +83,10 @@ def create(
     user_payload = LoginUserRequestModel(username=email, password=password)
     response = auth_client.user_login(user_payload)
 
-    if response.status != 200:
+    if response.status != HTTPStatus.OK:
         raise ValueError(
-            f"Failed to authenticate user: expected status 200, got {response.status}] ({response.text()})"
+            f"""Failed to authenticate user: expected status OK,
+            got {response.status}] ({response.text()})"""
         )
 
     bearer_token = LoginUserResponseModel.model_validate(response.json()).access_token

@@ -45,7 +45,7 @@ class TestAuth:
 
             expect(
                 market_page.nav_bar.login_button,
-                "Login button is preset in the NavBar.",
+                "Login button is present in the NavBar.",
             ).not_to_be_visible()
 
     @qase.id(41)
@@ -59,3 +59,5 @@ class TestAuth:
             expect(login_page.page, "The `Login page` did not open.").to_have_url(
                 login_page.page_url
             )
+
+            expect(login_page.login_button, "There is not visible `Login button`.").to_be_visible()
