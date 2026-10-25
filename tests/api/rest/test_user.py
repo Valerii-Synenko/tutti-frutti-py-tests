@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from framework.api.rest.models.user.user_request import LoginUserRequestModel
 from framework.api.rest.models.user.user_response import (
     LoginUserResponseModel,
@@ -20,14 +22,14 @@ class TestUser:
     def test_create_account(self, api_hub, user_for_registration):
         with qase.step(
             title="Register a new user via the API",
-            expected="1. The response status is `201` with input email and full_name.\n"
-            "2. The response has `is_admin` false and `is_seller` false.\n"
-            "3. The response has `is_active` true.\n"
-            "4. The response has no password or hashed_password field.",
+            expected="""
+            1. The response status is `201` with input email and full_name.
+            2. The response has `is_admin` false and `is_seller` false.
+            3. The response has no password or hashed_password field.""",
         ):
             register_response = api_hub.auth_client.user_registration(user_for_registration)
 
-            assert register_response.status == 201, (
+            assert register_response.status == HTTPStatus.CREATED, (
                 f"Unexpected status code: {register_response.status}"
             )
             user = RegisterUserResponseModel.model_validate(register_response.json())
@@ -50,5 +52,7 @@ class TestUser:
             )
             login_response = api_hub.auth_client.user_login(login_payload)
 
-            assert login_response.status == 200, f"Unexpected status code: {login_response.status}"
+            assert login_response.status == HTTPStatus.OK, (
+                f"Unexpected status code: {login_response.status}"
+            )
             LoginUserResponseModel.model_validate(login_response.json())
