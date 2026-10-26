@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict, EmailStr, Field
 JWT = Annotated[str, Field(pattern=r"^[\w-]+\.[\w-]+\.[\w-]+$")]
 
 
-class RegisterUserResponseModel(BaseModel):
+class RegisterUserModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     id: UUID
@@ -18,7 +18,7 @@ class RegisterUserResponseModel(BaseModel):
     is_seller: bool
 
 
-class LoginUserResponseModel(BaseModel):
+class LoginUserModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     access_token: JWT

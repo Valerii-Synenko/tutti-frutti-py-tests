@@ -3,12 +3,12 @@ from __future__ import annotations
 from pydantic import BaseModel
 
 
-class Attributes(BaseModel):
+class FruitAttributes(BaseModel):
     shelf_life_days: int
     storage: str
 
 
-class CreateFruitResponseModel(BaseModel):
+class CreateFruitModel(BaseModel):
     name: str
     slug: str
     description: str
@@ -19,4 +19,4 @@ class CreateFruitResponseModel(BaseModel):
     image_url: str
     base_price_hint_eur: float
     initial_quantity: int
-    attributes: Attributes
+    attributes: FruitAttributes

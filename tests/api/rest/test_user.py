@@ -1,8 +1,8 @@
 from http import HTTPStatus
 
-from framework.api.rest.models.user.user_response import (
-    LoginUserResponseModel,
-    RegisterUserResponseModel,
+from framework.api.rest.models.user_response import (
+    LoginUserModel,
+    RegisterUserModel,
 )
 from framework.api.rest.payloads.user import LoginPayload
 from qase.pytest import qase
@@ -32,7 +32,7 @@ class TestUser:
             assert register_response.status == HTTPStatus.CREATED, (
                 f"Unexpected status code: {register_response.status}"
             )
-            user = RegisterUserResponseModel.model_validate(register_response.json())
+            user = RegisterUserModel.model_validate(register_response.json())
             assert user.email == user_for_registration.email, (
                 "Unexpected user's email in the response."
             )
@@ -55,4 +55,4 @@ class TestUser:
             assert login_response.status == HTTPStatus.OK, (
                 f"Unexpected status code: {login_response.status}"
             )
-            LoginUserResponseModel.model_validate(login_response.json())
+            LoginUserModel.model_validate(login_response.json())
