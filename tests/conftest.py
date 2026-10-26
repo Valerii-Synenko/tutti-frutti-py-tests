@@ -6,7 +6,7 @@ from uuid import UUID
 import pytest
 from faker import Faker
 from framework.api.api_hub import ApiHub
-from framework.api.rest.models.user.user_request import RegisterUserRequestModel
+from framework.api.rest.payloads.user import RegisterPayload
 from framework.db.db_hub import DbHub
 from framework.utils.user import AuthenticatedUser, create
 from playwright.sync_api import APIRequestContext, Playwright
@@ -67,7 +67,7 @@ def buyer_user(create_user: Callable[..., AuthenticatedUser]) -> AuthenticatedUs
 
 @pytest.fixture
 def user_for_registration(faker, db_hub):
-    user_payload = RegisterUserRequestModel(
+    user_payload = RegisterPayload(
         full_name=f"{faker.first_name()} {faker.last_name()}",
         email=faker.email(),
         password=faker.password(length=8),

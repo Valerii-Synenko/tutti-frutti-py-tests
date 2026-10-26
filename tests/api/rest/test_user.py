@@ -1,10 +1,10 @@
 from http import HTTPStatus
 
-from framework.api.rest.models.user.user_request import LoginUserRequestModel
 from framework.api.rest.models.user.user_response import (
     LoginUserResponseModel,
     RegisterUserResponseModel,
 )
+from framework.api.rest.payloads.user import LoginPayload
 from qase.pytest import qase
 
 
@@ -46,7 +46,7 @@ class TestUser:
             title="Login via the API with the same user",
             expected="The response status is `200` with a token pair.",
         ):
-            login_payload = LoginUserRequestModel(
+            login_payload = LoginPayload(
                 username=user_for_registration.email,
                 password=user_for_registration.password,
             )

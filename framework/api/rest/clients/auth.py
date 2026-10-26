@@ -1,8 +1,10 @@
+from dataclasses import asdict
+
 from playwright.sync_api import APIRequestContext, APIResponse
 from qase.pytest import qase
 
 from framework.api.rest.clients.base import BaseClient
-from framework.api.rest.models.user.user_request import LoginUserRequestModel, RegisterUserRequestModel
+from framework.api.rest.payloads.user import LoginPayload, RegisterPayload
 
 
 class AuthClient(BaseClient):
@@ -12,7 +14,7 @@ class AuthClient(BaseClient):
         self.register_endpoint = "/register"
 
     @qase.step("POST request to the endpoint: /auth/login")
-    def user_login(self, payload: LoginUserRequestModel) -> APIResponse:
+    def user_login(self, payload: LoginPayload) -> APIResponse:
         """
         Authenticates a user by sending his credentials to the `login` endpoint.
 
@@ -23,11 +25,11 @@ class AuthClient(BaseClient):
         """
         return self.api_context.post(
             url=self.base_url + self.login_endpoint,
-            form=payload.model_dump(),
+            form=asdict(payload),
         )
 
     @qase.step("POST request to the endpoint: /auth/register")
-    def user_registration(self, payload: RegisterUserRequestModel) -> APIResponse:
+    def user_registration(self, payload: RegisterPayload) -> APIResponse:
         """
         Registers a new user by sending his credentials to the `registration` endpoint.
 
@@ -38,5 +40,5 @@ class AuthClient(BaseClient):
         """
         return self.api_context.post(
             url=self.base_url + self.register_endpoint,
-            data=payload.model_dump(),
+            data=asdict(payload),
         )

@@ -3,8 +3,8 @@ from http import HTTPStatus
 from faker import Faker
 
 from framework.api.rest.clients.auth import AuthClient
-from framework.api.rest.models.user.user_request import LoginUserRequestModel
 from framework.api.rest.models.user.user_response import LoginUserResponseModel
+from framework.api.rest.payloads.user import LoginPayload
 from framework.db.clients.postgress.users_client import UsersDbClient
 from framework.db.models.postgres.users_db import UserRecordModel
 from framework.utils.hashing import hash_password
@@ -80,7 +80,7 @@ def create(
     )
     users_db.insert_user(user_row)
 
-    user_payload = LoginUserRequestModel(username=email, password=password)
+    user_payload = LoginPayload(username=email, password=password)
     response = auth_client.user_login(user_payload)
 
     if response.status != HTTPStatus.OK:
