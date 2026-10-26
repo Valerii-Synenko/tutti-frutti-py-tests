@@ -3,12 +3,12 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True, slots=True)
 class RegisterPayload:
-    email: str
-    password: str
-    full_name: str
+    email: str | None = None
+    password: str | None = None
+    full_name: str | None = None
 
     def __str__(self) -> str:
-        return f"email={self.email!r}, full_name={self.full_name!r}, password={self.password}"
+        return f"email={self.email!r}, password={self.password!r}, full_name={self.full_name!r}"
 
 
 @dataclass(frozen=True, slots=True)
