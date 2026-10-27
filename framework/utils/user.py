@@ -3,7 +3,7 @@ from http import HTTPStatus
 from faker import Faker
 
 from framework.api.rest.clients.auth import AuthClient
-from framework.api.rest.models.user_response import LoginUserModel
+from framework.api.rest.models.user.login_response import LoginUserModel
 from framework.api.rest.payloads.user import LoginPayload
 from framework.db.clients.postgress.users_client import UsersDbClient
 from framework.db.models.postgres.users_db import UserRecordModel
