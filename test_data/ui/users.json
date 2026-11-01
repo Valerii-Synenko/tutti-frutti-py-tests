@@ -1,6 +1,0 @@
-{
-  "standard_user": {
-    "username": "${ADMIN_EMAIL}",
-    "password": "${ADMIN_PASSWORD}"
-  }
-}
