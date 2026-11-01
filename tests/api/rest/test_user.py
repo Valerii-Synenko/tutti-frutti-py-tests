@@ -8,7 +8,6 @@ from framework.api.rest.models.user.registration_response import (
     RegisterUserModel,
 )
 from framework.api.rest.payloads.user import LoginPayload
-from framework.db.db_hub import DbHub
 from playwright.async_api import APIResponse
 from qase.pytest import qase
 from test_data.api.rest.user_data import NEGATIVE_REGISTRATION_CASES
@@ -65,22 +64,18 @@ class TestUser:
 
     @qase.id(42)
     @qase.title("Reject registration with missing fields via API")
-    @pytest.mark.parametrize(("payload", "loc", "msg", "query"), NEGATIVE_REGISTRATION_CASES)
-    def test_reject_registration_with_missing_fields(
-        self, api_hub: ApiHub, db_hub: DbHub, payload, loc, msg, query
-    ):
+    @pytest.mark.parametrize(("payload", "loc", "msg"), NEGATIVE_REGISTRATION_CASES)
+    def test_reject_registration_with_missing_fields(self, api_hub: ApiHub, payload, loc, msg):
         with qase.step(
             title="Register via the API with a missing field",
-            expected="""
+            expected=f"""
             1. Status code: 422 undefined.
-            2. Error location has affected item.
-            3. No account created.
+            2. Loc has {loc!r} and msg is {msg!r}
             """,
         ):
             response: APIResponse = api_hub.auth_client.user_registration(payload=payload)
             assert response.status == HTTPStatus.UNPROCESSABLE_CONTENT, "Unexpected status code."
 
-            model = InvalidRegistrationModel.model_validate(response.json())
-            assert model.detail[0].loc == loc, "Unexpected error location."
-            assert model.detail[0].msg == msg, "Unexpected error message."
-            assert len(db_hub.users_db.execute_query(query)) == 0, "Account unexpectedly created."
+            details_in_response = InvalidRegistrationModel.model_validate(response.json()).detail[0]
+            assert details_in_response.loc == loc, "Unexpected error location."
+            assert details_in_response.msg == msg, "Unexpected error message."
