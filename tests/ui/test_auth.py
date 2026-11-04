@@ -13,7 +13,7 @@ class TestAuth:
     `login`, `registration`
     """
 
-    @qase.id(37)
+    @qase.id(56)
     @qase.title("Happy path: User logs in.")
     def test_successful_login(self, login_page, buyer_user):
         with qase.step(
