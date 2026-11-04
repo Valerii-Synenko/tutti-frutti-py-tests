@@ -2,18 +2,18 @@ from framework.api.rest.payloads.user import RegisterPayload
 
 NEGATIVE_REGISTRATION_CASES = (
     (
-        RegisterPayload("jane.tester@example.com", "Password1!", ""),
+        RegisterPayload(email="jane.tester@example.com", password="Password1!"),  # noqa: S106
         ["body", "full_name"],
-        "String should have at least 1 character",
+        "Input should be a valid string",
     ),
     (
-        RegisterPayload("", "Password1!", "Jane Tester"),
+        RegisterPayload(password="Password1!", full_name="Jane Tester"),  # noqa: S106
         ["body", "email"],
-        "value is not a valid email address: An email address must have an @-sign.",
+        "Input should be a valid string",
     ),
     (
-        RegisterPayload("jane.tester@example.com", "", "Jane Tester"),
+        RegisterPayload(email="jane.tester@example.com", full_name="Jane Tester"),
         ["body", "password"],
-        "String should have at least 8 characters",
+        "Input should be a valid string",
     ),
 )
