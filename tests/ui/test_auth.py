@@ -61,3 +61,21 @@ class TestAuth:
             )
 
             expect(login_page.login_button, "There is not visible `Login button`.").to_be_visible()
+
+    @qase.id(38)
+    @qase.title("Checks that a logged-in user stays logged in after reloading the page.")
+    def test_user_logged_in_after_page_reload(self, market_page, buyer_user):
+        with qase.step(
+            title="Reload current page",
+            expected="""
+            1. The NavBar still shows the user's full name.
+            2. The `Log out` button is visible.
+            """,
+        ):
+            market_page = market_page.goto(bearer=buyer_user.bearer_token)
+            market_page.page.reload()
+
+            expect(market_page.nav_bar.logout_button, "Missing `Log out` button").to_be_visible()
+            expect(market_page.nav_bar.user_link, "Mussing user name from navbar").to_have_text(
+                buyer_user.full_name
+            )
