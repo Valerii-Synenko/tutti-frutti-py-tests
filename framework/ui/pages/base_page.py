@@ -1,3 +1,4 @@
+import json
 from typing import Self
 
 from playwright.sync_api import Page
@@ -20,7 +21,25 @@ class BasePage:
         """
         return self.__class__.__name__
 
-    def goto(self) -> Self:
+    def goto(self, bearer: str | None = None) -> Self:
+        """
+        Go to a page.
+        If you need to open a page with already logged in user, put the user's bearer token.
+
+        Parameters
+        ----------
+        bearer: str
+            The user's bearer token under which the page will be opened.
+        """
+        if bearer:
+            self.page.add_init_script(
+                f"""
+                if (!sessionStorage.getItem('__tf_auth_seeded')) {{
+                    localStorage.setItem('tf_access_token', {json.dumps(bearer)});
+                    sessionStorage.setItem('__tf_auth_seeded', '1');
+                }}
+                """
+            )
         with qase.step(f"Go to {self}"):
             self.page.goto(self.page_url)
         return self
