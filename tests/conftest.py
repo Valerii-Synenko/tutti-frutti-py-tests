@@ -61,7 +61,7 @@ def create_user(faker, db_hub, api_hub):
 
 
 @pytest.fixture
-def buyer_user(create_user: Callable[..., AuthenticatedUser]) -> AuthenticatedUser:
+def regular_user(create_user: Callable[..., AuthenticatedUser]) -> AuthenticatedUser:
     return create_user()
 
 

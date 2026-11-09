@@ -15,7 +15,7 @@ class TestAuth:
 
     @qase.id(56)
     @qase.title("Happy path: User logs in.")
-    def test_successful_login(self, login_page, buyer_user):
+    def test_successful_login(self, login_page, regular_user):
         with qase.step(
             title="Login as a user",
             expected="1. The user is redirected to the Market page.\n"
@@ -24,8 +24,8 @@ class TestAuth:
             "4. The `Login button` is not visible.",
         ):
             market_page: MarketPage = login_page.goto().login(
-                email=buyer_user.email,
-                password=buyer_user.password,
+                email=regular_user.email,
+                password=regular_user.password,
             )
 
             expect(
@@ -36,7 +36,7 @@ class TestAuth:
             expect(
                 market_page.nav_bar.user_link,
                 "Missing user name in the NavBar.",
-            ).to_have_text(buyer_user.full_name)
+            ).to_have_text(regular_user.full_name)
 
             expect(
                 market_page.nav_bar.logout_button,
@@ -64,7 +64,7 @@ class TestAuth:
 
     @qase.id(38)
     @qase.title("Checks that a logged-in user stays logged in after reloading the page.")
-    def test_user_logged_in_after_page_reload(self, market_page, buyer_user):
+    def test_user_logged_in_after_page_reload(self, market_page, regular_user):
         with qase.step(
             title="Reload current page",
             expected="""
@@ -72,10 +72,10 @@ class TestAuth:
             2. The `Log out` button is visible.
             """,
         ):
-            market_page = market_page.goto(bearer=buyer_user.bearer_token)
+            market_page = market_page.goto(bearer=regular_user.bearer_token)
             market_page.page.reload()
 
             expect(market_page.nav_bar.logout_button, "Missing `Log out` button").to_be_visible()
             expect(market_page.nav_bar.user_link, "Mussing user name from navbar").to_have_text(
-                buyer_user.full_name
+                regular_user.full_name
             )
