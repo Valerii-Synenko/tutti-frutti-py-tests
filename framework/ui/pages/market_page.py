@@ -6,5 +6,5 @@ from framework.ui.pages.base_page import BasePage
 
 class MarketPage(BasePage):
     def __init__(self, page: Page):
-        super().__init__(page, "")
+        super().__init__(page, "/")
         self.nav_bar = NavBar(page)
