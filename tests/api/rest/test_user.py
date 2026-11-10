@@ -25,13 +25,7 @@ class TestUser:
     @qase.id(55)
     @qase.title("Create account with valid data via API")
     def test_create_account(self, api_hub, user_for_registration):
-        with qase.step(
-            title="Register a new user via the API",
-            expected="""
-            1. The response status is `201` with input email and full_name.
-            2. The response has `is_admin` false and `is_seller` false.
-            3. The response has no password or hashed_password field.""",
-        ):
+        with qase.step(title="Register a new user via the API"):
             register_response = api_hub.auth_client.user_registration(user_for_registration)
 
             assert register_response.status == HTTPStatus.CREATED, (
@@ -66,13 +60,7 @@ class TestUser:
     @qase.title("Reject registration with missing fields via API")
     @pytest.mark.parametrize(("payload", "loc", "msg"), NEGATIVE_REGISTRATION_CASES)
     def test_reject_registration_with_missing_fields(self, api_hub: ApiHub, payload, loc, msg):
-        with qase.step(
-            title="Register via the API with a missing field",
-            expected=f"""
-            1. Status code: 422 undefined.
-            2. Loc has {loc!r} and msg is {msg!r}
-            """,
-        ):
+        with qase.step(title="Register via the API with a missing field"):
             response: APIResponse = api_hub.auth_client.user_registration(payload=payload)
             assert response.status == HTTPStatus.UNPROCESSABLE_CONTENT, "Unexpected status code."
 
